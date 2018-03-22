@@ -1,0 +1,5 @@
+com/project/languages/repositories/LanguageRepository.class
+com/project/languages/services/LanguageService.class
+com/project/languages/controllers/LanguageController.class
+com/project/languages/languagesApplication.class
+com/project/languages/models/Language.class

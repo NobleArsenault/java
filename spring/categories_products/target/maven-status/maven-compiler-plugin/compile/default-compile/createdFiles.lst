@@ -1,0 +1,9 @@
+com/project/categories_products/services/ProductService.class
+com/project/categories_products/repositories/CategoryRepository.class
+com/project/categories_products/models/Product.class
+com/project/categories_products/models/Category.class
+com/project/categories_products/controllers/ProductController.class
+com/project/categories_products/controllers/CategoryController.class
+com/project/categories_products/categories_productsApplication.class
+com/project/categories_products/repositories/ProductRepository.class
+com/project/categories_products/services/CategoryService.class

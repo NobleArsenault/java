@@ -1,4 +1,4 @@
-package com.project.languages.controllers;
+package com.project.beltreview.controllers;
 
 import java.security.Principal;
 import java.util.Date;
@@ -18,21 +18,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.beltreview.services.UserService;
+
 @Controller
-@RequestMapping("/*") // Wildcard all routes.
-public class Router{
-	public Router(){
+@RequestMapping("/**") // Wildcard all routes.
+public class RouteController{
+	private UserService us;
 
+	public RouteController(UserService us){
+		this.us=us;
 	}
-
-	@RequestMapping("index")
-	public String index(){
-		return "index";
-	}
-
+	// If route not exists, redirect to login if not in session, else dashboard.
 	@RequestMapping("")
-	public String redirect(HttpServletRequest req){		
-		String url = req.getRequestURI().toString();
-		return "redirect:/index";
-	}		
+	public String index(HttpServletRequest req,HttpSession s){		
+		if(!us.isValid(s)){
+			return "redirect:/users/new";
+		}else{
+			return "redirect:/events";
+		}
+	}	
 }

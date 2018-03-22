@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,17 +31,33 @@ import com.project.beltreview.services.MessageService;
 @Controller
 @RequestMapping("/events")
 public class EventController{
-
+	private UserService userService;
 	private EventService eventService;
 	private MessageService messageService;
 
-	public EventController(EventService eventService, MessageService messageService){
+	public EventController(EventService eventService, MessageService messageService, UserService userService){
 		this.eventService=eventService;
 		this.messageService=messageService;
+		this.userService=userService;
 
 	}
 	@RequestMapping("")
-	public String events(@ModelAttribute("event") Event event){
+	public String events(@ModelAttribute("event") Event event, HttpSession session,Model model){
+		long user_id = (long)session.getAttribute("id");
+		User user = userService.findById(user_id);
+
+		ArrayList<Event> userStates = eventService.findByState(user.getState());
+		model.addAttribute("userStates", userStates);
+
+		ArrayList<Event> allEvents = (ArrayList<Event>)eventService.all();
+		ArrayList<Event> notUserStates = new ArrayList<Event>();
+		for(int i=0; i<allEvents.size();i++){
+			if( !allEvents.get(i).getState().equals( user.getState() ) )
+				notUserStates.add( allEvents.get(i) );
+		}
+
+		model.addAttribute("notUserStates", notUserStates);
+
 		return "events";
 	}
 
@@ -65,6 +82,7 @@ public class EventController{
 	
 		Event e = eventService.findById(event_id);
 		message.setEvent(e);
+		// message.setUser((User)session.getAttribute("loggedUser")); attatch to the message 
 		messageService.create(message);
 		return "redirect:/events/"+event_id;
 	}

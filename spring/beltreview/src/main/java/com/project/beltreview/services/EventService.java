@@ -41,6 +41,12 @@ public class EventService {
 		eventRepository.delete(id);
 	}
 
+	public ArrayList<Event> findByState(String state){
+		return (ArrayList<Event>)eventRepository.findByState(state);
+	}
 	
-	// Crud methods to act on services go here.
+	// public ArrayList<Event> findByStateNotEquals(String state){
+	// 	return (ArrayList<Event>)eventRepository.findByStateNotEquals(state);
+	// }
+
 }

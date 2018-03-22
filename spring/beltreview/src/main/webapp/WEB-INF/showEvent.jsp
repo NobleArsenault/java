@@ -39,9 +39,9 @@
 
 		<h1>Message Wall:</h1>
 
-		<cforEach items="${event.messages}" var="msg">
-			<p>${msg.text}</p>
-		</cforEach>
+			<c:forEach items="${event.messages}" var="messagess">
+				<p>${messagess.text}</p>
+			</c:forEach>
 
 
 		<form:form action="/events/${event.id}/messages/new" method="POST" modelAttribute="message">

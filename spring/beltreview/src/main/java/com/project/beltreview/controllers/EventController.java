@@ -32,9 +32,11 @@ import com.project.beltreview.services.MessageService;
 public class EventController{
 
 	private EventService eventService;
+	private MessageService messageService;
 
-	public EventController(EventService eventService){
+	public EventController(EventService eventService, MessageService messageService){
 		this.eventService=eventService;
+		this.messageService=messageService;
 
 	}
 	@RequestMapping("")
@@ -56,4 +58,15 @@ public class EventController{
 
 		return "showEvent";
 	}
+
+	@PostMapping("/{id}/messages/new")
+	public String comment(@Valid @ModelAttribute("message") Message message, BindingResult res, @PathVariable("id") long event_id){
+		if(res.hasErrors()){return "redirect:/events/"+event_id;}
+	
+		Event e = eventService.findById(event_id);
+		message.setEvent(e);
+		messageService.create(message);
+		return "redirect:/events/"+event_id;
+	}
+
 }

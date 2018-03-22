@@ -49,7 +49,7 @@
 				<form:errors path="text"></form:errors>
 				<form:input path="text"></form:input>
 			</form:label>
-
+			<input type="submit" value="Post Message">
 		</form:form>
 	</body>
 </html>

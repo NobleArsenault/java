@@ -43,6 +43,7 @@ public class EventController{
 	}
 	@RequestMapping("")
 	public String events(@ModelAttribute("event") Event event, HttpSession session,Model model){
+		if(session.getAttribute("id") == null){return "redirect:/";}
 		long user_id = (long)session.getAttribute("id");
 		User user = userService.findById(user_id);
 
